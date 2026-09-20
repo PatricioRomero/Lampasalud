@@ -469,6 +469,40 @@
     </section>
 
     <!-- Footer -->
+    <!-- Asistente de orientación: recopila datos mínimos y deriva a WhatsApp. No solicita RUT. -->
+    <section id="ls-assistant" class="bg-white py-12">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <div class="rounded-3xl border border-blue-100 bg-blue-50 p-6 md:p-8 shadow-sm">
+                <p class="text-lsBlue font-bold uppercase tracking-wider text-sm mb-2">Asistente Lampasalud</p>
+                <h2 class="text-3xl font-heading font-bold text-lsDark mb-3">¿En qué podemos orientarte?</h2>
+                <p class="text-gray-600 mb-6">Para atender tu consulta, necesitamos tu nombre, teléfono y motivo. Para agendar una hora te pediremos los datos adicionales solo en ese momento.</p>
+                <form data-assistant-form class="grid gap-4">
+                    <label class="grid gap-1 text-sm font-semibold text-gray-700">Nombre completo
+                        <input name="assistantName" required autocomplete="name" class="w-full px-4 py-3 bg-white rounded-xl border border-blue-100 focus:outline-none focus:ring-2 focus:ring-lsBlue" />
+                    </label>
+                    <label class="grid gap-1 text-sm font-semibold text-gray-700">Teléfono
+                        <input name="assistantPhone" required type="tel" autocomplete="tel" class="w-full px-4 py-3 bg-white rounded-xl border border-blue-100 focus:outline-none focus:ring-2 focus:ring-lsBlue" />
+                    </label>
+                    <label class="grid gap-1 text-sm font-semibold text-gray-700">Motivo de consulta
+                        <select name="assistantReason" required class="w-full px-4 py-3 bg-white rounded-xl border border-blue-100 focus:outline-none focus:ring-2 focus:ring-lsBlue">
+                            <option value="">Selecciona una opción...</option>
+                            <option>Consultar servicios</option>
+                            <option>Consultar valores</option>
+                            <option>Consultar horarios o disponibilidad</option>
+                            <option>Consultar toma de muestras</option>
+                            <option>Consultar endoscopía</option>
+                            <option>Agendar una hora</option>
+                            <option>Otra consulta</option>
+                        </select>
+                    </label>
+                    <label class="flex gap-3 items-start text-sm text-gray-600"><input type="checkbox" name="assistantConsent" required class="mt-1" /> <span>Autorizo a Lampasalud a contactarme para responder esta consulta.</span></label>
+                    <button type="submit" class="bg-lsGreen hover:bg-[#006028] text-white font-bold py-3 px-6 rounded-full transition shadow-md">Continuar por WhatsApp</button>
+                    <p data-assistant-status class="hidden text-sm font-semibold rounded-xl px-4 py-3" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <footer class="bg-lsDark text-white pt-16 pb-8 border-t-[6px] border-lsBlue">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
@@ -576,6 +610,28 @@
                     submitButton.classList.remove('opacity-60', 'cursor-wait');
                     submitButton.textContent = 'Enviar Solicitud';
                 }
+            });
+        }
+    </script>
+    <script>
+        // MVP seguro: identificación inicial y derivación humana; no consulta ni escribe en SACMED.
+        const assistantForm = document.querySelector('[data-assistant-form]');
+        if (assistantForm) {
+            assistantForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const data = new FormData(assistantForm);
+                const text = [
+                    'Hola, necesito orientación de Lampa Salud.',
+                    `Nombre: ${data.get('assistantName')}`,
+                    `Teléfono: ${data.get('assistantPhone')}`,
+                    `Motivo: ${data.get('assistantReason')}`,
+                    'Aún no solicito agendamiento automático.'
+                ].join('\n');
+                const url = `https://wa.me/56999187629?text=${encodeURIComponent(text)}`;
+                window.open(url, '_blank', 'noopener,noreferrer');
+                const status = assistantForm.querySelector('[data-assistant-status]');
+                status.textContent = 'WhatsApp fue abierto. Nuestro equipo continuará la atención.';
+                status.className = 'text-sm font-semibold rounded-xl px-4 py-3 bg-green-100 text-green-800';
             });
         }
     </script>
