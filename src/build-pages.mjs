@@ -15,7 +15,7 @@ const WA = 'https://wa.me/56999187629';
 const TEL = '+56 9 99 18 76 29';
 const EMAIL = 'centromedicolampasalud@gmail.com';
 const MAPS = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3334.34842186847!2d-70.8753232!3d-33.2841443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662b9a7c5b144bd%3A0xc3b82df28399e289!2sBarros%20Luco%201980%2C%20Lampa%2C%20Regi%C3%B3n%20Metropolitana!5e0!3m2!1ses!2scl!4v1700000000000!5m2!1ses!2scl';
-const GA_ID = ''; // Lampa Salud no tiene propiedad de GA detectada
+const GA_ID = 'G-LSG4TNYGV'; // propiedad GA4 de Lampa Salud (nunca estuvo instalada en el sitio)
 
 const waLink = (t = 'Hola, quisiera agendar una hora en Lampa Salud.') => `${WA}?text=${encodeURIComponent(t)}`;
 
