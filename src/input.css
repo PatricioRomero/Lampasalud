@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Estilos personalizados (antes en <style> inline) ===== */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f1f1f1;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Nunito', sans-serif;
+}
+
+.hero-bg {
+  background-image: linear-gradient(rgba(3, 63, 99, 0.8), rgba(0, 128, 54, 0.6)), url('/assets/img/hero-inicio.jpg');
+  background-size: cover;
+  background-position: center;
+}
+@media (min-width: 1024px) {
+  .hero-bg { background-attachment: fixed; }
+}
+
+.service-card { transition: all 0.4s ease; }
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-bottom: 5px solid #138CF7;
+}
+
+.image-frame {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+.image-frame:hover { transform: scale(1.02); }
+
+.floating-whatsapp {
+  position: fixed; bottom: 30px; right: 30px;
+  background-color: #25D366; color: white;
+  width: 65px; height: 65px; border-radius: 50%;
+  display: flex; justify-content: center; align-items: center;
+  font-size: 35px; box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000; transition: all 0.3s ease; animation: pulse 2s infinite;
+}
+.floating-whatsapp:hover { transform: scale(1.1); animation: none; }
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+  70%  { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
