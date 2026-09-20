@@ -107,32 +107,8 @@ const SCRIPTS = `
         }
     </script>`;
 
-const BIZ_LD = {
-  '@type': ['MedicalClinic', 'DiagnosticLab'],
-  '@id': `${SITE}/#clinica`,
-  name: 'Lampa Salud',
-  alternateName: 'Lampa Salud — Centro de Diagnóstico por Imagen',
-  url: `${SITE}/`,
-  image: `${SITE}/assets/img/hero-inicio.jpg`,
-  telephone: '+56999187629',
-  email: EMAIL,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Barros Luco 1980, Street Center',
-    addressLocality: 'Lampa',
-    addressRegion: 'Región Metropolitana',
-    addressCountry: 'CL',
-  },
-  geo: { '@type': 'GeoCoordinates', latitude: -33.2841443, longitude: -70.8753232 },
-  areaServed: { '@type': 'City', name: 'Lampa' },
-  openingHours: 'Mo-Fr',
-  medicalSpecialty: ['Radiology', 'PrimaryCare', 'Cardiovascular'],
-  availableService: [
-    'Tomografía Computada', 'Ecografía y Doppler', 'Radiología Digital',
-    'Mamografía Digital', 'Densitometría Ósea', 'Toma de Muestras',
-    'Consultas Médicas', 'Cardiología',
-  ].map((n) => ({ '@type': 'MedicalProcedure', name: n })),
-};
+const BIZ_ID = `${SITE}/#clinica`;
+// El objeto completo se construye más abajo, cuando ya existe SERVICIOS.
 
 /* ------------------------------- HEAD ------------------------------- */
 function head({ title, description, canonical, jsonld }) {
@@ -172,8 +148,13 @@ function head({ title, description, canonical, jsonld }) {
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <!-- Imagen principal (LCP): precargada para mejorar Core Web Vitals -->
+    <link rel="preload" as="image" href="/assets/img/hero-inicio.jpg" fetchpriority="high">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome cargado sin bloquear el render -->
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
 
@@ -446,18 +427,75 @@ const SERVICIOS = [
   },
 ];
 
-/* ---------------------------- Piezas comunes ---------------------------- */
-const ldService = (nombre, descripcion, slug, faq) => JSON.stringify({
+/* ---------------------------- Entidad principal (schema) ---------------------------- */
+// NOTA: el horario exacto (hora de apertura/cierre) no está publicado en el sitio;
+// cuando el usuario lo confirme, agregar `openingHoursSpecification` con días y horas.
+const BIZ_LD = {
+  '@type': ['MedicalClinic', 'DiagnosticLab', 'LocalBusiness'],
+  '@id': BIZ_ID,
+  name: 'Lampa Salud',
+  alternateName: 'Lampa Salud — Centro de Diagnóstico por Imagen',
+  url: `${SITE}/`,
+  logo: `${SITE}/assets/img/lampa-salud.jpg`,
+  image: [
+    `${SITE}/assets/img/hero-inicio.jpg`,
+    `${SITE}/assets/img/tomografia-computada-y-sala-de-control.jpg`,
+    `${SITE}/assets/img/recepcion-y-sala-de-espera-de-lampa-salud.jpg`,
+    `${SITE}/assets/img/profesional-junto-a-equipo-de-ecografia.jpg`,
+  ],
+  telephone: '+56999187629',
+  email: EMAIL,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Barros Luco 1980, Street Center',
+    addressLocality: 'Lampa',
+    addressRegion: 'Región Metropolitana',
+    addressCountry: 'CL',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: -33.2841443, longitude: -70.8753232 },
+  hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Lampa Salud, Barros Luco 1980, Lampa')}`,
+  areaServed: [
+    { '@type': 'City', name: 'Lampa' },
+    { '@type': 'AdministrativeArea', name: 'Región Metropolitana' },
+  ],
+  openingHours: 'Mo-Fr',
+  medicalSpecialty: ['Radiology', 'PrimaryCare', 'Cardiovascular', 'Physiotherapy', 'Psychiatric'],
+  availableService: SERVICIOS.map((s) => ({ '@type': 'MedicalProcedure', name: s.nav, url: `${SITE}/${s.slug}/` })),
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Exámenes y servicios de diagnóstico',
+    itemListElement: SERVICIOS.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'MedicalProcedure', name: s.nav, url: `${SITE}/${s.slug}/` },
+    })),
+  },
+};
+
+// Promoción vigente publicada en el sitio: Mamografía + Ecografía Mamaria $30.000 CLP
+const PROMO_LD = {
+  '@type': 'Offer',
+  name: 'Mamografía + Ecografía Mamaria',
+  description: 'Promoción del Mes de la Concientización: Mamografía + Ecografía Mamaria por $30.000 CLP.',
+  price: '30000',
+  priceCurrency: 'CLP',
+  availability: 'https://schema.org/InStock',
+  url: `${SITE}/mamografia-lampa/`,
+  seller: { '@id': BIZ_ID },
+};
+
+
+const ldService = (nombre, descripcion, slug, faq, extra = []) => JSON.stringify({
   '@context': 'https://schema.org',
   '@graph': [
     BIZ_LD,
-    { '@type': 'MedicalProcedure', name: nombre, description: descripcion, url: `${SITE}/${slug}/`, provider: { '@id': `${SITE}/#clinica` } },
+    { '@type': 'MedicalProcedure', name: nombre, description: descripcion, url: `${SITE}/${slug}/`, provider: { '@id': BIZ_ID } },
     { '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
     { '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Inicio', item: `${SITE}/` },
       { '@type': 'ListItem', position: 2, name: 'Servicios', item: `${SITE}/servicios/` },
       { '@type': 'ListItem', position: 3, name: nombre, item: `${SITE}/${slug}/` },
     ] },
+    ...extra,
   ],
 }, null, 2);
 
@@ -495,7 +533,7 @@ const servicePage = (s) => head({
   title: s.title,
   description: s.description,
   canonical: `${SITE}/${s.slug}/`,
-  jsonld: ldService(s.h1, s.description, s.slug, s.faq),
+  jsonld: ldService(s.h1, s.description, s.slug, s.faq, s.slug === 'mamografia-lampa' ? [PROMO_LD] : []),
 }) + nav() + `
     <section class="hero-bg py-20">
         <div class="container mx-auto px-4 relative z-10">
@@ -576,9 +614,9 @@ const scripts = index.slice(afterFooterIdx + '</footer>'.length, index.indexOf('
 
 const homeLd = JSON.stringify({
   '@context': 'https://schema.org',
-  '@graph': [BIZ_LD, {
+  '@graph': [BIZ_LD, PROMO_LD, {
     '@type': 'WebSite', '@id': `${SITE}/#web`, url: `${SITE}/`, name: 'Lampa Salud',
-    inLanguage: 'es-CL', publisher: { '@id': `${SITE}/#clinica` },
+    inLanguage: 'es-CL', publisher: { '@id': BIZ_ID },
   }],
 }, null, 2);
 
@@ -615,4 +653,32 @@ ${urls.map((u) => `  <url>
   </url>`).join('\n')}
 </urlset>
 `);
+/* ---- llms.txt: resumen curado para asistentes de IA (estándar emergente) ---- */
+write('llms.txt', `# Lampa Salud — Centro de Diagnóstico por Imagen
+
+> Centro de diagnóstico por imagen en Lampa, Región Metropolitana, Chile.
+> Realizamos tomografía computada (scanner), ecografía y Doppler, mamografía digital,
+> radiología digital, densitometría ósea, toma de muestras (Fonasa Nivel 1),
+> consultas médicas y cardiología.
+
+## Datos de contacto
+- Dirección: Barros Luco 1980, Street Center, Lampa, Región Metropolitana, Chile
+- Teléfono / WhatsApp: ${TEL}
+- Correo: ${EMAIL}
+- Horario: lunes a viernes, horario de oficina
+- Coordenadas: -33.2841443, -70.8753232
+
+## Páginas principales
+- [Inicio](${SITE}/): presentación del centro y sus servicios
+- [Servicios](${SITE}/servicios/): catálogo completo de exámenes
+${SERVICIOS.map((s) => `- [${s.nav}](${SITE}/${s.slug}/)`).join('\n')}
+
+## Promoción vigente
+- Mamografía + Ecografía Mamaria por $30.000 CLP: ${SITE}/mamografia-lampa/
+
+## Notas para asistentes de IA
+- Este archivo es un resumen de orientación; el contenido oficial y vigente es el de las páginas enlazadas.
+- No publicamos precios salvo la promoción indicada. Para valores y disponibilidad de horas, contactar por WhatsApp.
+`);
+
 console.log('Listo.');

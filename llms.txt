@@ -1,0 +1,32 @@
+# Lampa Salud — Centro de Diagnóstico por Imagen
+
+> Centro de diagnóstico por imagen en Lampa, Región Metropolitana, Chile.
+> Realizamos tomografía computada (scanner), ecografía y Doppler, mamografía digital,
+> radiología digital, densitometría ósea, toma de muestras (Fonasa Nivel 1),
+> consultas médicas y cardiología.
+
+## Datos de contacto
+- Dirección: Barros Luco 1980, Street Center, Lampa, Región Metropolitana, Chile
+- Teléfono / WhatsApp: +56 9 99 18 76 29
+- Correo: centromedicolampasalud@gmail.com
+- Horario: lunes a viernes, horario de oficina
+- Coordenadas: -33.2841443, -70.8753232
+
+## Páginas principales
+- [Inicio](https://lampasalud.cl/): presentación del centro y sus servicios
+- [Servicios](https://lampasalud.cl/servicios/): catálogo completo de exámenes
+- [Tomografía (Scanner)](https://lampasalud.cl/tomografia-computada-lampa/)
+- [Ecografía y Doppler](https://lampasalud.cl/ecografia-lampa/)
+- [Mamografía Digital](https://lampasalud.cl/mamografia-lampa/)
+- [Radiología Digital](https://lampasalud.cl/radiologia-digital-lampa/)
+- [Densitometría Ósea](https://lampasalud.cl/densitometria-osea-lampa/)
+- [Toma de Muestras](https://lampasalud.cl/toma-de-muestras-lampa/)
+- [Consultas Médicas](https://lampasalud.cl/consultas-medicas-lampa/)
+- [Cardiología](https://lampasalud.cl/cardiologia-lampa/)
+
+## Promoción vigente
+- Mamografía + Ecografía Mamaria por $30.000 CLP: https://lampasalud.cl/mamografia-lampa/
+
+## Notas para asistentes de IA
+- Este archivo es un resumen de orientación; el contenido oficial y vigente es el de las páginas enlazadas.
+- No publicamos precios salvo la promoción indicada. Para valores y disponibilidad de horas, contactar por WhatsApp.

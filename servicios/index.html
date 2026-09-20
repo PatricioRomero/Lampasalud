@@ -33,8 +33,13 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <!-- Imagen principal (LCP): precargada para mejorar Core Web Vitals -->
+    <link rel="preload" as="image" href="/assets/img/hero-inicio.jpg" fetchpriority="high">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome cargado sin bloquear el render -->
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
 
@@ -45,13 +50,20 @@
     {
       "@type": [
         "MedicalClinic",
-        "DiagnosticLab"
+        "DiagnosticLab",
+        "LocalBusiness"
       ],
       "@id": "https://lampasalud.cl/#clinica",
       "name": "Lampa Salud",
       "alternateName": "Lampa Salud — Centro de Diagnóstico por Imagen",
       "url": "https://lampasalud.cl/",
-      "image": "https://lampasalud.cl/assets/img/hero-inicio.jpg",
+      "logo": "https://lampasalud.cl/assets/img/lampa-salud.jpg",
+      "image": [
+        "https://lampasalud.cl/assets/img/hero-inicio.jpg",
+        "https://lampasalud.cl/assets/img/tomografia-computada-y-sala-de-control.jpg",
+        "https://lampasalud.cl/assets/img/recepcion-y-sala-de-espera-de-lampa-salud.jpg",
+        "https://lampasalud.cl/assets/img/profesional-junto-a-equipo-de-ecografia.jpg"
+      ],
       "telephone": "+56999187629",
       "email": "centromedicolampasalud@gmail.com",
       "address": {
@@ -66,50 +78,137 @@
         "latitude": -33.2841443,
         "longitude": -70.8753232
       },
-      "areaServed": {
-        "@type": "City",
-        "name": "Lampa"
-      },
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=Lampa%20Salud%2C%20Barros%20Luco%201980%2C%20Lampa",
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Lampa"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Región Metropolitana"
+        }
+      ],
       "openingHours": "Mo-Fr",
       "medicalSpecialty": [
         "Radiology",
         "PrimaryCare",
-        "Cardiovascular"
+        "Cardiovascular",
+        "Physiotherapy",
+        "Psychiatric"
       ],
       "availableService": [
         {
           "@type": "MedicalProcedure",
-          "name": "Tomografía Computada"
+          "name": "Tomografía (Scanner)",
+          "url": "https://lampasalud.cl/tomografia-computada-lampa/"
         },
         {
           "@type": "MedicalProcedure",
-          "name": "Ecografía y Doppler"
+          "name": "Ecografía y Doppler",
+          "url": "https://lampasalud.cl/ecografia-lampa/"
         },
         {
           "@type": "MedicalProcedure",
-          "name": "Radiología Digital"
+          "name": "Mamografía Digital",
+          "url": "https://lampasalud.cl/mamografia-lampa/"
         },
         {
           "@type": "MedicalProcedure",
-          "name": "Mamografía Digital"
+          "name": "Radiología Digital",
+          "url": "https://lampasalud.cl/radiologia-digital-lampa/"
         },
         {
           "@type": "MedicalProcedure",
-          "name": "Densitometría Ósea"
+          "name": "Densitometría Ósea",
+          "url": "https://lampasalud.cl/densitometria-osea-lampa/"
         },
         {
           "@type": "MedicalProcedure",
-          "name": "Toma de Muestras"
+          "name": "Toma de Muestras",
+          "url": "https://lampasalud.cl/toma-de-muestras-lampa/"
         },
         {
           "@type": "MedicalProcedure",
-          "name": "Consultas Médicas"
+          "name": "Consultas Médicas",
+          "url": "https://lampasalud.cl/consultas-medicas-lampa/"
         },
         {
           "@type": "MedicalProcedure",
-          "name": "Cardiología"
+          "name": "Cardiología",
+          "url": "https://lampasalud.cl/cardiologia-lampa/"
         }
-      ]
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Exámenes y servicios de diagnóstico",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "MedicalProcedure",
+              "name": "Tomografía (Scanner)",
+              "url": "https://lampasalud.cl/tomografia-computada-lampa/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "MedicalProcedure",
+              "name": "Ecografía y Doppler",
+              "url": "https://lampasalud.cl/ecografia-lampa/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "MedicalProcedure",
+              "name": "Mamografía Digital",
+              "url": "https://lampasalud.cl/mamografia-lampa/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "MedicalProcedure",
+              "name": "Radiología Digital",
+              "url": "https://lampasalud.cl/radiologia-digital-lampa/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "MedicalProcedure",
+              "name": "Densitometría Ósea",
+              "url": "https://lampasalud.cl/densitometria-osea-lampa/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "MedicalProcedure",
+              "name": "Toma de Muestras",
+              "url": "https://lampasalud.cl/toma-de-muestras-lampa/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "MedicalProcedure",
+              "name": "Consultas Médicas",
+              "url": "https://lampasalud.cl/consultas-medicas-lampa/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "MedicalProcedure",
+              "name": "Cardiología",
+              "url": "https://lampasalud.cl/cardiologia-lampa/"
+            }
+          }
+        ]
+      }
     },
     {
       "@type": "CollectionPage",
