@@ -11,8 +11,12 @@ import path from 'path';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..');
 const SITE = 'https://lampasalud.cl';
-const WA = 'https://wa.me/56999187629';
-const TEL = '+56 9 99 18 76 29';
+const WA = 'https://wa.me/56999187629';               // WhatsApp — SOLO mensajes
+const TEL_WA = '+56 9 99 18 76 29';                   // WhatsApp (solo mensajes)
+const TEL1 = '+56 9 7166 6300';                       // Consultas y solicitudes de hora
+const TEL2 = '+56 9 3720 8144';                       // Consultas y solicitudes de hora
+const TEL = TEL1;                                     // teléfono principal del negocio
+const CONTACTOS = `Teléfonos ${TEL1} o ${TEL2} · WhatsApp ${TEL_WA} (solo mensajes)`;
 const EMAIL = 'centromedicolampasalud@gmail.com';
 const MAPS = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3334.34842186847!2d-70.8753232!3d-33.2841443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662b9a7c5b144bd%3A0xc3b82df28399e289!2sBarros%20Luco%201980%2C%20Lampa%2C%20Regi%C3%B3n%20Metropolitana!5e0!3m2!1ses!2scl!4v1700000000000!5m2!1ses!2scl';
 const GA_ID = 'G-LSG4TNYGV'; // propiedad GA4 de Lampa Salud (nunca estuvo instalada en el sitio)
@@ -188,7 +192,8 @@ function nav() {
                 <span><i class="fa-solid fa-clock text-lsBlue mr-2"></i>Lun a Jue 8:30-17:30 · Vie 8:30-15:30 · Sáb 8:30-13:00</span>
             </div>
             <div class="flex items-center space-x-4">
-                <a href="tel:+56999187629" class="hover:text-lsBlue transition"><i class="fa-solid fa-phone text-lsBlue mr-2"></i>${TEL}</a>
+                <a href="tel:+56971666300" class="hover:text-lsBlue transition"><i class="fa-solid fa-phone text-lsBlue mr-2"></i>${TEL1}</a>
+                <a href="tel:+56937208144" class="hover:text-lsBlue transition hidden xl:inline"><i class="fa-solid fa-phone text-lsBlue mr-2"></i>${TEL2}</a>
                 <a href="mailto:${EMAIL}" aria-label="Correo" class="hover:text-lsBlue transition"><i class="fa-solid fa-envelope"></i></a>
             </div>
         </div>
@@ -248,7 +253,8 @@ ${SERVICIOS.slice(0, 6).map((s) => `                        <li><a href="/${s.sl
                     <h4 class="text-lg font-heading font-bold mb-6">Contacto</h4>
                     <ul class="space-y-4 text-sm text-gray-400">
                         <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 text-lsBlue mr-3 w-4"></i><span>Barros Luco 1980, Street Center<br>Lampa, Región Metropolitana</span></li>
-                        <li class="flex items-center"><i class="fa-brands fa-whatsapp text-lsGreen mr-3 w-4 text-lg"></i><a href="${waLink()}" target="_blank" rel="noopener" class="hover:text-white">${TEL}</a></li>
+                        <li class="flex items-start"><i class="fa-brands fa-whatsapp mt-1 text-lsGreen mr-3 w-4 text-lg"></i><span><a href="${waLink()}" target="_blank" rel="noopener" class="hover:text-white">${TEL_WA}</a> <span class="text-gray-500">(WhatsApp, solo mensajes)</span></span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-phone mt-1 text-lsBlue mr-3 w-4"></i><span><a href="tel:+56971666300" class="hover:text-white">${TEL1}</a><br><a href="tel:+56937208144" class="hover:text-white">${TEL2}</a></span></li>
                         <li class="flex items-center"><i class="fa-solid fa-envelope text-lsBlue mr-3 w-4"></i><a href="mailto:${EMAIL}" class="hover:text-white break-all">${EMAIL}</a></li>
                         <li class="flex items-start"><i class="fa-solid fa-clock mt-1 text-lsBlue mr-3 w-4"></i><span>Lun a Jue 8:30–17:30<br>Vie 8:30–15:30 · Sáb 8:30–13:00<br><span class="text-gray-500">Domingos ocasionales 9:00–13:00, anunciados en redes</span></span></li>
                     </ul>
@@ -401,7 +407,7 @@ const SERVICIOS = [
         <li><strong>Psicología</strong></li>
       </ul>`,
     faq: [
-      ['¿Necesito hora previa?', 'Sí, le recomendamos agendar previamente por WhatsApp al ' + TEL + ' o en nuestro centro.'],
+      ['¿Necesito hora previa?', 'Sí, le recomendamos agendar previamente por WhatsApp al ' + TEL_WA + ' (solo mensajes) o llamando al ' + TEL1 + ' / ' + TEL2 + '.'],
       ['¿Atienden convenios o previsiones?', 'Consúltenos por WhatsApp para conocer las condiciones según su previsión.'],
       ['¿Puedo atenderme por Fonasa?', 'Contamos con Fonasa Nivel 1. Consúltenos para confirmar las condiciones de su atención.'],
     ],
@@ -445,7 +451,12 @@ const BIZ_LD = {
     `${SITE}/assets/img/recepcion-y-sala-de-espera-de-lampa-salud.jpg`,
     `${SITE}/assets/img/profesional-junto-a-equipo-de-ecografia.jpg`,
   ],
-  telephone: '+56999187629',
+  telephone: '+56971666300',
+  contactPoint: [
+    { '@type': 'ContactPoint', telephone: '+56971666300', contactType: 'reservations', availableLanguage: ['es'] },
+    { '@type': 'ContactPoint', telephone: '+56937208144', contactType: 'reservations', availableLanguage: ['es'] },
+    { '@type': 'ContactPoint', telephone: '+56999187629', contactType: 'customer service', availableLanguage: ['es'] },
+  ],
   email: EMAIL,
   address: {
     '@type': 'PostalAddress',
@@ -521,7 +532,7 @@ const ctaFinal = (t, s) => `
             <p class="text-gray-300 mb-8">${s}</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="${waLink()}" target="_blank" rel="noopener" class="bg-lsGreen hover:bg-[#006028] px-8 py-4 rounded-full font-bold transition shadow-lg"><i class="fa-brands fa-whatsapp mr-2"></i>Agendar por WhatsApp</a>
-                <a href="tel:+56999187629" class="border-2 border-lsBlue text-lsBlue hover:bg-lsBlue hover:text-white px-8 py-4 rounded-full font-bold transition"><i class="fa-solid fa-phone mr-2"></i>${TEL}</a>
+                <a href="tel:+56971666300" class="border-2 border-lsBlue text-lsBlue hover:bg-lsBlue hover:text-white px-8 py-4 rounded-full font-bold transition"><i class="fa-solid fa-phone mr-2"></i>${TEL1}</a>
             </div>
         </div>
     </section>`;
@@ -560,7 +571,7 @@ ${bc([['Inicio', '/'], ['Servicios', '/servicios/'], [s.nav, null]])}
 ${s.body}
             </div>
             <div class="mt-10 p-6 bg-lsLight rounded-xl border-l-4 border-lsBlue">
-                <p class="text-sm text-gray-600"><i class="fa-solid fa-circle-info text-lsBlue mr-2"></i><strong>Dónde:</strong> Barros Luco 1980, Street Center, Lampa, Región Metropolitana · <strong>Horario:</strong> Lunes a Viernes · <strong>Teléfono:</strong> ${TEL}</p>
+                <p class="text-sm text-gray-600"><i class="fa-solid fa-circle-info text-lsBlue mr-2"></i><strong>Dónde:</strong> Barros Luco 1980, Street Center, Lampa · <strong>Horario:</strong> Lun a Jue 8:30–17:30 · Vie 8:30–15:30 · Sáb 8:30–13:00 · <strong>${CONTACTOS}</strong></p>
             </div>
         </div>
     </section>
@@ -619,7 +630,13 @@ let index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 const heroIdx = index.indexOf('<!-- Hero -->');
 const footerIdx = index.indexOf('<footer');
 const afterFooterIdx = index.indexOf('</footer>');
-const contenido = index.slice(heroIdx, footerIdx);           // hero + secciones
+// Sección de contacto del sitio original: corregir teléfonos (incluía un número erróneo
+// "9 7166 4300" y omitía el "9 3720 8144" que sí figura en la ficha de Google).
+const contenido = index.slice(heroIdx, footerIdx)
+  .replace(/\(Chat\)/g, '(WhatsApp, solo mensajes)')
+  .replace(/\+56 9 7166 4300/g, TEL1)
+  .replace(/\+56 9 3218 7269/g, TEL2)
+  .replace(/\s*<p class="text-gray-600">\+56 9 3272 0144<\/p>/g, '');
 const scripts = index.slice(afterFooterIdx + '</footer>'.length, index.indexOf('</body>')); // whatsapp + scripts
 
 const homeLd = JSON.stringify({
