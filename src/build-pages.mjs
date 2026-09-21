@@ -183,7 +183,7 @@ function nav() {
         <div class="container mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center space-x-6">
                 <span><i class="fa-solid fa-location-dot text-lsGreen mr-2"></i>Barros Luco 1980, Lampa</span>
-                <span><i class="fa-solid fa-clock text-lsBlue mr-2"></i>Lunes a Viernes - Horario de Oficina</span>
+                <span><i class="fa-solid fa-clock text-lsBlue mr-2"></i>Lun a Jue 8:30-17:30 · Vie 8:30-15:30 · Sáb 8:30-13:00</span>
             </div>
             <div class="flex items-center space-x-4">
                 <a href="tel:+56999187629" class="hover:text-lsBlue transition"><i class="fa-solid fa-phone text-lsBlue mr-2"></i>${TEL}</a>
@@ -248,7 +248,7 @@ ${SERVICIOS.slice(0, 6).map((s) => `                        <li><a href="/${s.sl
                         <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 text-lsBlue mr-3 w-4"></i><span>Barros Luco 1980, Street Center<br>Lampa, Región Metropolitana</span></li>
                         <li class="flex items-center"><i class="fa-brands fa-whatsapp text-lsGreen mr-3 w-4 text-lg"></i><a href="${waLink()}" target="_blank" rel="noopener" class="hover:text-white">${TEL}</a></li>
                         <li class="flex items-center"><i class="fa-solid fa-envelope text-lsBlue mr-3 w-4"></i><a href="mailto:${EMAIL}" class="hover:text-white break-all">${EMAIL}</a></li>
-                        <li class="flex items-center"><i class="fa-solid fa-clock text-lsBlue mr-3 w-4"></i><span>Lunes a Viernes</span></li>
+                        <li class="flex items-start"><i class="fa-solid fa-clock mt-1 text-lsBlue mr-3 w-4"></i><span>Lun a Jue 8:30–17:30<br>Vie 8:30–15:30 · Sáb 8:30–13:00<br><span class="text-gray-500">Domingos ocasionales 9:00–13:00, anunciados en redes</span></span></li>
                     </ul>
                 </div>
             </div>
@@ -458,7 +458,13 @@ const BIZ_LD = {
     { '@type': 'City', name: 'Lampa' },
     { '@type': 'AdministrativeArea', name: 'Región Metropolitana' },
   ],
-  openingHours: 'Mo-Fr',
+  // Horario real informado por el cliente (domingos son ocasionales y se anuncian en redes)
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'], opens: '08:30', closes: '17:30' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Friday', opens: '08:30', closes: '15:30' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '08:30', closes: '13:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Sunday', opens: '00:00', closes: '00:00' },
+  ],
   medicalSpecialty: ['Radiology', 'PrimaryCare', 'Cardiovascular', 'Physiotherapy', 'Psychiatric'],
   availableService: SERVICIOS.map((s) => ({ '@type': 'MedicalProcedure', name: s.nav, url: `${SITE}/${s.slug}/` })),
   hasOfferCatalog: {
