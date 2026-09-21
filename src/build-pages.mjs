@@ -108,6 +108,8 @@ const SCRIPTS = `
     </script>`;
 
 const BIZ_ID = `${SITE}/#clinica`;
+// URL canónica de la ficha verificada de Google Maps (CID de la ficha real)
+const MAPS_CID = 'https://maps.google.com/?cid=-5992990107637665610';
 // El objeto completo se construye más abajo, cuando ya existe SERVICIOS.
 
 /* ------------------------------- HEAD ------------------------------- */
@@ -453,7 +455,9 @@ const BIZ_LD = {
     addressCountry: 'CL',
   },
   geo: { '@type': 'GeoCoordinates', latitude: -33.2841443, longitude: -70.8753232 },
-  hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Lampa Salud, Barros Luco 1980, Lampa')}`,
+  hasMap: MAPS_CID,
+  // Vincula la entidad del sitio con la ficha real de Google Maps
+  sameAs: [MAPS_CID],
   areaServed: [
     { '@type': 'City', name: 'Lampa' },
     { '@type': 'AdministrativeArea', name: 'Región Metropolitana' },
