@@ -20,6 +20,12 @@ const CONTACTOS = `Teléfonos ${TEL1} o ${TEL2} · WhatsApp ${TEL_WA} (solo mens
 const EMAIL = 'centromedicolampasalud@gmail.com';
 const MAPS = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3334.34842186847!2d-70.8753232!3d-33.2841443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662b9a7c5b144bd%3A0xc3b82df28399e289!2sBarros%20Luco%201980%2C%20Lampa%2C%20Regi%C3%B3n%20Metropolitana!5e0!3m2!1ses!2scl!4v1700000000000!5m2!1ses!2scl';
 const GA_ID = 'G-LSG4TNYGV'; // propiedad GA4 de Lampa Salud (nunca estuvo instalada en el sitio)
+/* Metricool: script de seguimiento de la web (be.js). Se inserta sin modificar,
+   tal como lo entrega Metricool en "Conexión con la Web". El hash identifica la marca. */
+const METRICOOL_HASH = 'b184ae01373670a38f610c7845b9f9ee';
+const METRICOOL = `
+    <!-- Metricool — seguimiento de la web (be.js) -->
+    <script>function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}loadScript(function(){beTracker.t({hash:"${METRICOOL_HASH}"})});</script>`;
 
 const waLink = (t = 'Hola, quisiera agendar una hora en Lampa Salud.') => `${WA}?text=${encodeURIComponent(t)}`;
 
@@ -166,7 +172,7 @@ function head({ title, description, canonical, jsonld }) {
 
     <script type="application/ld+json">
 ${jsonld}
-    </script>
+    </script>${METRICOOL}
 </head>
 <body class="text-gray-800 antialiased overflow-x-hidden">
 `;
